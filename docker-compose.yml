@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    volumes:
+      - ./db:/usr/src/app/db
+      - ./.env:/usr/src/app/.env
+    stdin_open: true
+    tty: true
