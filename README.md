@@ -7,9 +7,13 @@ metadata about the sender.
 It also supports attachments, without storing them on your disk.
 
 
+
 ## Configuration
 
-To authenticate your account, use command:
+1. Go to https://my.telegram.org . Select "API development tools" and create application.
+2. Copy `.env.example` file with name `.env`. Change `TELEGRAM_API_ID` and `TELEGRAM_API_HASH`
+ values.
+3. Authenticate your account using command:
 ```
 docker-compose run app python ./monitor.py auth
 ```

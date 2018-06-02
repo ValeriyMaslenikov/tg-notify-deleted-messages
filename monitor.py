@@ -22,7 +22,9 @@ SECONDS_PER_MINUTE = 60
 
 # Loading environment variables
 env_path = Path(".") / ".env"
-load_dotenv(dotenv_path=env_path)
+
+if os.path.isfile(env_path):
+    load_dotenv(dotenv_path=env_path)
 
 # Configure logging level
 logging.basicConfig(level=os.getenv("LOGGING_LEVEL", logging.INFO))
@@ -30,6 +32,10 @@ logging.basicConfig(level=os.getenv("LOGGING_LEVEL", logging.INFO))
 # Cleaning database interval
 # 2 days by documentation and + 6 hours by practice
 MESSAGE_SAVING_PERIOD_SECONDS = 54 * MINUTES_PER_HOUR * SECONDS_PER_MINUTE
+
+if os.getenv("TELEGRAM_API_ID") is None or os.getenv("TELEGRAM_API_HASH") is None:
+    print('Please, read `README.md` and create `.env` file with telegram API credentials')
+    exit(1)
 
 # Telegram API
 TELEGRAM_API_ID = os.getenv("TELEGRAM_API_ID")

@@ -5,6 +5,6 @@ services:
     build: .
     volumes:
       - ./db:/usr/src/app/db
-      - ./.env:/usr/src/app/.env
+      - ./.env:/usr/src/app/.env:ro
     stdin_open: true
     tty: true
