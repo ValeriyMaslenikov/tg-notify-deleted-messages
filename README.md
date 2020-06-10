@@ -15,7 +15,7 @@ It also supports attachments, without storing them on your disk.
  values.
 3. Authenticate your account using command:
 ```
-docker-compose create --force-recreate --build app && docker-compose run app python ./monitor.py auth
+docker-compose create --force-recreate --build app && docker-compose run app python ./src/monitor.py auth
 ```
 
 ## Start daemon
