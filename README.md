@@ -32,11 +32,15 @@ docker-compose stop app
 
 ## Disk usage and attachments
 
-`tg-notify-deleted-messages` store messages history for past 2 days and 6 hours.
+`tg-notify-deleted-messages` store messages history for the time specified
+in the `MESSAGES_TTL_DAYS` environment variable, with default TTL – 14 days.
+You can change this interval by changing the `.env` file, or defining environment
+variable at the system level.
+
 The application supports attachments, but don't store it.
 Be careful, your messages can fill your disk space.
 
 ## Security
 
-Please, don't run this application on servers, where other persons have access to. Messages history and credentials stores in an
-insecure SQLite database.
+Please, don't run this application on servers, where other persons have access to.
+Messages history and credentials are stored in the insecure SQLite database.
