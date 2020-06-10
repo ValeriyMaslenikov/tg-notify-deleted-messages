@@ -32,7 +32,7 @@ async def main():
         exit(0)
 
     if not await client.is_user_authorized():
-        logger.critical('Please, execute `auth` command before starting the daemon (see `README.md` file)')
+        logging.critical('Please, execute `auth` command before starting the daemon (see `README.md` file)')
         exit(1)
 
     if bool(os.getenv('NOTIFY_ONGOING_MESSAGES', '1')):
