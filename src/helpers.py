@@ -21,9 +21,6 @@ def load_env(dot_env_folder):
 
     if os.path.isfile(env_path):
         load_dotenv(dotenv_path=env_path)
-        logging.debug('`.env` file is loaded')
-    else:
-        logging.debug('`.env` file is absent, using system environment variables')
 
 
 def initialize_messages_db():
@@ -43,19 +40,18 @@ def initialize_messages_db():
 sqlite_cursor, sqlite_connection = initialize_messages_db()
 
 
-def get_on_new_message(client: TelegramClient):
-    async def on_new_message(event: NewMessage.Event):
-        sqlite_cursor.execute(
-            "INSERT INTO messages (message_id, message_from_id, message, media, created) VALUES (?, ?, ?, ?, ?)",
-            (
-                event.message.id,
-                event.message.from_id,
-                event.message.message,
-                sqlite3.Binary(pickle.dumps(event.message.media)),
-                str(datetime.now())))
-        sqlite_connection.commit()
+async def on_new_message(event: NewMessage.Event):
+    sqlite_cursor.execute(
+        "INSERT INTO messages (message_id, message_from_id, message, media, created) VALUES (?, ?, ?, ?, ?)",
+        (
+            event.message.id,
+            event.message.from_id,
+            event.message.message,
+            sqlite3.Binary(pickle.dumps(event.message.media)),
+            str(datetime.now())))
+    sqlite_connection.commit()
 
-    return on_new_message
+
 
 
 def load_messages_from_event(event: MessageDeleted.Event) -> List[Message]:

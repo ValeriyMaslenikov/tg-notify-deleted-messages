@@ -4,12 +4,9 @@ import pathlib
 import sys
 
 from telethon import TelegramClient, events
-from helpers import load_env, get_on_new_message, get_on_message_deleted, cycled_clean_old_messages
+from helpers import load_env, on_new_message, get_on_message_deleted, cycled_clean_old_messages
 
 BASE_DIR = (pathlib.Path(__file__).parent / '..').absolute()
-
-# Configure logging level, based on the system environment variables
-logging.basicConfig(level=os.getenv("LOGGING_LEVEL", logging.INFO))
 
 # Loading environment variables
 load_env(BASE_DIR)
@@ -40,7 +37,7 @@ async def main():
     else:
         new_message_event = events.NewMessage(incoming=True, outgoing=False)
 
-    client.add_event_handler(get_on_new_message(client), new_message_event)
+    client.add_event_handler(on_new_message, new_message_event)
     client.add_event_handler(get_on_message_deleted(client), events.MessageDeleted())
 
     await cycled_clean_old_messages()
