@@ -47,6 +47,11 @@ Messages history and credentials are stored in the insecure SQLite database.
 
 ## Roadmap
 
+### Display the chat, from which the message was deleted
+
+Now it sends only the information about the sender of the message, but it 
+doesn't point, from which entity the message was deleted. 
+
 ### Preload the history, when the application starts 
 
 If you want to support the old messages, but you start this application recently,
