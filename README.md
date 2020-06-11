@@ -47,6 +47,11 @@ Messages history and credentials are stored in the insecure SQLite database.
 
 ## Roadmap
 
+### Preload the history, when the application starts 
+
+If you want to support the old messages, but you start this application recently,
+it'll be great, if it will preload the messages in the database once it starts.
+
 ### Instead of "Saved messages", send these messages to the private channel/bot
 
 It will allows us to receive notifications, when the message was deleted, instead of
