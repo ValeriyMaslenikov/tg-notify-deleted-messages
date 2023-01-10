@@ -4,7 +4,7 @@ import pathlib
 import sys
 
 from telethon import TelegramClient, events
-from helpers import load_env, on_new_message, get_on_message_deleted, cycled_clean_old_messages
+from helpers import load_env, on_new_message, get_on_message_deleted, get_on_message_edited, cycled_clean_old_messages
 
 BASE_DIR = (pathlib.Path(__file__).parent / '..').absolute()
 
@@ -32,16 +32,21 @@ async def main():
         logging.critical('Please, execute `auth` command before starting the daemon (see `README.md` file)')
         exit(1)
 
-    if bool(os.getenv('NOTIFY_ONGOING_MESSAGES', '1')):
+    if bool(os.getenv('NOTIFY_OUTGOING_MESSAGES', '1')):
         new_message_event = events.NewMessage()
     else:
         new_message_event = events.NewMessage(incoming=True, outgoing=False)
 
+    # We could do this in the event handlers but calling it often is a waste of resources as this does not change
+    me = await client.get_me()
+
     client.add_event_handler(on_new_message, new_message_event)
     client.add_event_handler(get_on_message_deleted(client), events.MessageDeleted())
+    client.add_event_handler(get_on_message_edited(client, me.id), events.MessageEdited())
 
     await cycled_clean_old_messages()
 
 
 with TelegramClient('db/user', os.getenv("TELEGRAM_API_ID"), os.getenv("TELEGRAM_API_HASH")) as client:
+    logging.info('starting up...')
     client.loop.run_until_complete(main())

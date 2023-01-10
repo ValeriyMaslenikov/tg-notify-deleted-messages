@@ -8,3 +8,4 @@ services:
       - ./.env:/usr/src/app/.env:ro
     stdin_open: true
     tty: true
+    restart: unless-stopped
